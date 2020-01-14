@@ -21,4 +21,6 @@ public class Constants {
     public final static Color RED_TARGET = ColorMatch.makeColor(0.518, 0.347, 0.134);
     public final static Color YELLOW_TARGET = ColorMatch.makeColor(0.311, 0.566, 0.121);
 
+    public final static String[] COLOR_ORDER = {"Blue", "Green", "Red", "Yellow"};
+
 }
