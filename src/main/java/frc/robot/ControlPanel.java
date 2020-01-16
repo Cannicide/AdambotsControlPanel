@@ -9,14 +9,17 @@ import com.revrobotics.ColorMatchResult;
 
 public class ControlPanel {
   
-    private static String direction = "Clockwise";
-    private static String lastColor = "Unknown";
+    private static String direction;
+    private static String lastColor;
     
     public static void init() {   
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.BLUE_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.GREEN_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.RED_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.YELLOW_TARGET);
+
+        direction = "Unknown";
+        lastColor = "Unknown";
     }
 
     public static String getColor() {
@@ -43,6 +46,7 @@ public class ControlPanel {
           colorString = "Unknown";
         }
 
+        //If beyond 3 inches, detected color is inaccurate
         if (getProximity() < 100) {
             colorString = "Unknown";
         }
@@ -57,7 +61,7 @@ public class ControlPanel {
         if (nextColor == lastIndex) {
             direction = "Clockwise";
         }
-        else if (colorString != "Unknown" && lastColor != "Unknown") {
+        else if (!colorString.equals("Unknown") && !lastColor.equals("Unknown")) {
             direction = "Counterclockwise";
         }
         else {
@@ -181,7 +185,7 @@ public class ControlPanel {
     public static void dashboard() {
 
         Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
-        ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
+        //ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
 
         //TODO: Following if statement for testing out rotation-tracker
         if (getColor() == "Red" && !startedTracker) {

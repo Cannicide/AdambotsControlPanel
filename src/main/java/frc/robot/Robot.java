@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+//Robot is Iterative/Timed for testing purposes only
 
 /**
  * This is a simple example to show how the REV Color Sensor V3 can be used to
