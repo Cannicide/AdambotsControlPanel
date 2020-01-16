@@ -51,6 +51,14 @@ public class ControlPanel {
             colorString = "Unknown";
         }
 
+        //Account for inaccurate colors detected in transition between two colors
+        if (!mapNextColor(lastColor).equals(colorString) && !lastColor.equals("Unknown") && !getDirection().equals("Unknown")) {
+            //If the detected color does not appropriately match the predicted color to come after the last color,
+            //And both the last color and direction clockwise/counter-clockwise are known,
+            //Then stick to the value of the lastColor.
+            colorString = lastColor;
+        }
+
         int index = Arrays.asList(Constants.COLOR_ORDER).indexOf(colorString);
         int lastIndex = Arrays.asList(Constants.COLOR_ORDER).indexOf(lastColor);
 
@@ -77,15 +85,15 @@ public class ControlPanel {
         return direction;
     }
 
-    public static String mapNextColor() {
-        String currentColor = getColor();
+    public static String mapNextColor(String color) {
+        String currentColor = color;
         String currentDirection = getDirection();
         String nextColor;
 
         int index = Arrays.asList(Constants.COLOR_ORDER).indexOf(currentColor);
         int newIndex;
 
-        if (currentDirection == "Clockwise") {
+        if (currentDirection.equals("Clockwise")) {
             if (index + 1 > Constants.COLOR_ORDER.length - 1) {
                 newIndex = 0;
             }
@@ -95,7 +103,7 @@ public class ControlPanel {
 
             nextColor = Constants.COLOR_ORDER[newIndex];
         }
-        else if (currentDirection == "Counterclockwise") {
+        else if (currentDirection.equals("Counterclockwise")) {
             if (index - 1 < 0) {
                 newIndex = Constants.COLOR_ORDER.length - 1;
             }
@@ -116,6 +124,11 @@ public class ControlPanel {
         return Constants.M_COLOR_SENSOR.getProximity();
     }
 
+    //Converts proximity value to distance in inches for dashboard
+    public static int getDistance() {
+        return (getProximity() * 3) / 100;
+    }
+
 
     private static String rotationalStartingColor;
     private static int rotationalColorCount;
@@ -131,6 +144,10 @@ public class ControlPanel {
         offStartingColor = false;
 
         //start rotating control wheel motor
+    }
+
+    public static int getRotations() {
+        return rotationalColorCount / 2;
     }
 
     public static void mightStopRotating () {
@@ -152,7 +169,7 @@ public class ControlPanel {
             offStartingColor = true;
         }
 
-        if (rotationalColorCount/2 >= Constants.MIN_ROTATIONS) {
+        if (getRotations() >= Constants.MIN_ROTATIONS) {
             //stop rotating
             stopRotating = true; //TODO: for testing
         }
@@ -208,10 +225,10 @@ public class ControlPanel {
         SmartDashboard.putNumber("Blue", detectedColor.blue);*/
 
         //TODO: Below are to-be-tested/work-in-progress values
-        //SmartDashboard.putString("Direction", getDirection());
-        //SmartDashboard.putString("Predicted Next Color", mapNextColor());
+        SmartDashboard.putString("Direction", getDirection());
+        SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
         SmartDashboard.putBoolean("3 Rotations Complete", stopRotating);
-        SmartDashboard.putNumber("Rotations", rotationalColorCount / 2);
+        SmartDashboard.putNumber("Rotations", getRotations());
 
     }
 }
