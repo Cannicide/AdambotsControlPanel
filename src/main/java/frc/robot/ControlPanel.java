@@ -195,14 +195,16 @@ public class ControlPanel {
         return colorApprox;
     }    
 
+    public static double getConfidence() {
+        Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
+        ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
+        return match.confidence;
+    }
 
     //TODO: For testing rotation-tracker
     private static boolean startedTracker = false;
 
     public static void dashboard() {
-
-        Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
-        //ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
 
         //TODO: Following if statement for testing out rotation-tracker
         if (getColor() == "Red" && !startedTracker) {
@@ -215,9 +217,9 @@ public class ControlPanel {
             mightStopRotating();
         }
 
-        //SmartDashboard.putNumber("Confidence", match.confidence);
+        //SmartDashboard.putNumber("Confidence", getConfidence());
         SmartDashboard.putString("Detected Color", getColorCorrector());
-        //SmartDashboard.putNumber("Proximity", getProximity());
+        SmartDashboard.putNumber("Distance", getDistance());
     
         //TODO: Below are SmartDashboard values for debugging/testing purposes only
         /*SmartDashboard.putNumber("Red", detectedColor.red);
