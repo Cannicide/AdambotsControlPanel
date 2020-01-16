@@ -18,7 +18,7 @@ public class ControlPanel {
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.RED_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.YELLOW_TARGET);
 
-        direction = "Unknown";
+        direction = "Clockwise";
         lastColor = "Unknown";
     }
 
@@ -52,28 +52,11 @@ public class ControlPanel {
         }
 
         //Account for inaccurate colors detected in transition between two colors
-        if (!mapNextColor(lastColor).equals(colorString) && !lastColor.equals("Unknown") && !getDirection().equals("Unknown")) {
+        if (!mapNextColor(lastColor).equals(colorString) && !lastColor.equals("Unknown")) {
             //If the detected color does not appropriately match the predicted color to come after the last color,
             //And both the last color and direction clockwise/counter-clockwise are known,
             //Then stick to the value of the lastColor.
             colorString = lastColor;
-        }
-
-        int index = Arrays.asList(Constants.COLOR_ORDER).indexOf(colorString);
-        int lastIndex = Arrays.asList(Constants.COLOR_ORDER).indexOf(lastColor);
-
-        int nextColor = index - 1;
-
-        if (nextColor < 0) nextColor = Constants.COLOR_ORDER.length - 1; 
-
-        if (nextColor == lastIndex) {
-            direction = "Clockwise";
-        }
-        else if (!colorString.equals("Unknown") && !lastColor.equals("Unknown")) {
-            direction = "Counterclockwise";
-        }
-        else {
-            direction = "Unknown";
         }
 
         lastColor = colorString;
@@ -201,13 +184,30 @@ public class ControlPanel {
         return match.confidence;
     }
 
+    /*public static double getColorChannel(String color) {
+        Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
+
+        if (color.equals("Red")) {
+            return detectedColor.red;
+        }
+        else if (color.equals("Green")) {
+            return detectedColor.green;
+        }
+        else if (color.equals("Blue")) {
+            return detectedColor.blue;
+        }
+        else {
+            return 0.0;
+        }
+    }*/
+
     //TODO: For testing rotation-tracker
     private static boolean startedTracker = false;
 
     public static void dashboard() {
 
         //TODO: Following if statement for testing out rotation-tracker
-        if (getColor() == "Red" && !startedTracker) {
+        if (!startedTracker) {
             startRotating();
             startedTracker = true;
             //Begins testing rotation-tracker when on color red.
@@ -222,9 +222,9 @@ public class ControlPanel {
         SmartDashboard.putNumber("Distance", getDistance());
     
         //TODO: Below are SmartDashboard values for debugging/testing purposes only
-        /*SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);*/
+        /*SmartDashboard.putNumber("Red", getColorChannel("Red"));
+        SmartDashboard.putNumber("Green", getColorChannel("Green"));
+        SmartDashboard.putNumber("Blue", getColorChannel("Blue"));*/
 
         //TODO: Below are to-be-tested/work-in-progress values
         SmartDashboard.putString("Direction", getDirection());
