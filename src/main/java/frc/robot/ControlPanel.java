@@ -202,30 +202,24 @@ public class ControlPanel {
         startMotor();
     }
 
-    public static void monitorAligner() {
+    public String colorCorrector(String currentColor) {
+        return mapNextColor(mapNextColor(currentColor));
+    }
+    
+    public void monitorAligner() {
         boolean isTarget = false;
-        if (getColor().equals("Yellow") && targetColor.equals("Green")) {
-            isTarget = true;
-        }
-        if (getColor().equals("Green") && targetColor.equals("Yellow")) {
-            isTarget = true;
-        }
-        if (getColor().equals("Blue") && targetColor.equals("Red")) {
-            isTarget = true;
-        }
-        if (getColor().equals("Red") && targetColor.equals("Blue")) {
+        
+        if (targetColor.equals(colorCorrector(getColor()))) {
             isTarget = true;
         }
         else {
             isTarget = false;
         }
-
+    
         if (isTarget) {
+            tasksCompleted++;
             stopRotating = true;
             stopMotor();
-        }
-        else {
-            stopRotating = false;
         }
         
     }
@@ -273,7 +267,6 @@ public class ControlPanel {
             monitorAligner();
         }
 
-        SmartDashboard.putNumber("Confidence", getConfidence());
         SmartDashboard.putString("Detected Color", getColor());
     
         //TODO: Below are SmartDashboard values for debugging/testing purposes only
@@ -282,10 +275,10 @@ public class ControlPanel {
         SmartDashboard.putNumber("Blue", getColorChannel("Blue"));*/
 
         //TODO: Below are to-be-tested/work-in-progress values
-        SmartDashboard.putString("Direction", getDirection());
         SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
-        SmartDashboard.putBoolean("Target Color on Game Sensor", stopRotating);
         SmartDashboard.putNumber("Rotations", getRotations());
+        SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector());
+        SmartDashboard.putString("Target Gamesensor Color", targetColor);
 
     }
 }
