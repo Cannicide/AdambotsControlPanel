@@ -221,6 +221,7 @@ public class ControlPanel {
         if (isTarget) {
             stopMotor();
         }
+        
     }
 
     //This method gets confidence for the robot
@@ -255,13 +256,15 @@ public class ControlPanel {
 
         //TODO: Following if statement for testing out rotation-tracker
         if (!startedTracker) {
-            startRotations();
+            //startRotations();
+            startAligner();
             startedTracker = true;
             //Begins testing rotation-tracker when on color red.
         }
 
         if (startedTracker) {
-            monitorRotations();
+            //monitorRotations();
+            monitorAligner();
         }
 
         //SmartDashboard.putNumber("Confidence", getConfidence());
