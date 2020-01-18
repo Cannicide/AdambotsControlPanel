@@ -166,7 +166,7 @@ public class ControlPanel {
     }
     //This method gets the FMS color
     public static String getFmsColor() {
-        String gameData;
+        /*String gameData;
         gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             switch (gameData.charAt(0)) {
@@ -185,7 +185,9 @@ public class ControlPanel {
         } else {
             // Code for no data received yet
             return "Unknown";
-        }
+        }*/
+        //For testing purposes, assign manual color:
+        return "Blue";
     }
 
     
@@ -219,7 +221,11 @@ public class ControlPanel {
         }
 
         if (isTarget) {
+            stopRotating = true;
             stopMotor();
+        }
+        else {
+            stopRotating = false;
         }
         
     }
@@ -267,7 +273,7 @@ public class ControlPanel {
             monitorAligner();
         }
 
-        //SmartDashboard.putNumber("Confidence", getConfidence());
+        SmartDashboard.putNumber("Confidence", getConfidence());
         SmartDashboard.putString("Detected Color", getColor());
     
         //TODO: Below are SmartDashboard values for debugging/testing purposes only
@@ -278,7 +284,7 @@ public class ControlPanel {
         //TODO: Below are to-be-tested/work-in-progress values
         SmartDashboard.putString("Direction", getDirection());
         SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
-        SmartDashboard.putBoolean("3 Rotations Complete", stopRotating);
+        SmartDashboard.putBoolean("Target Color on Game Sensor", stopRotating);
         SmartDashboard.putNumber("Rotations", getRotations());
 
     }
