@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2017-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -8,61 +8,106 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-//Robot is Iterative/Timed for testing purposes only
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
- * This is a simple example to show how the REV Color Sensor V3 can be used to
- * detect pre-configured colors.
+ * The VM is configured to automatically run this class, and to call the functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the name of this class or
+ * the package after creating this project, you must also update the build.gradle file in the
+ * project.
  */
 public class Robot extends TimedRobot {
-  /**
-   * Change the I2C port below to match the connection of your color sensor
-   */
+  private Command m_autonomousCommand;
+
+  private RobotContainer m_robotContainer;
 
   /**
-   * A Rev Color Sensor V3 object is constructed with an I2C port as a 
-   * parameter. The device will be automatically initialized with default 
-   * parameters.
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
    */
-
-  /**
-   * A Rev Color Match object is used to register and detect known colors. This can 
-   * be calibrated ahead of time or during operation.
-   * 
-   * This object uses a simple euclidian distance to estimate the closest match
-   * with given confidence range.
-   */
-
-  /**
-   * Note: Any example colors should be calibrated as the user needs, these
-   * are here as a basic example.
-   */
-
   @Override
   public void robotInit() {
-     ControlPanel.init();
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
+    m_robotContainer = new RobotContainer();
   }
 
-
+  /**
+   * This function is called every robot packet, no matter the mode. Use this for items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before
+   * LiveWindow and SmartDashboard integrated updating.
+   */
   @Override
   public void robotPeriodic() {
-    /**
-     * The method GetColor() returns a normalized color value from the sensor and can be
-     * useful if outputting the color to an RGB LED or similar. To
-     * read the raw color, use GetRawColor().
-     * 
-     * The color sensor works best when within a few inches from an object in
-     * well lit conditions (the built in LED is a big help here!). The farther
-     * an object is the more light from the surroundings will bleed into the 
-     * measurements and make it difficult to accurately determine its color.
-     */
-      ControlPanel.dashboard();
-    /**
-     * Open Smart Dashboard or Shuffleboard to see the color detected by the 
-     * sensor.
-     */
-
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
   }
 
+  /**
+   * This function is called once each time the robot enters Disabled mode.
+   */
+  @Override
+  public void disabledInit() {
+  }
 
+  @Override
+  public void disabledPeriodic() {
+  }
+
+  /**
+   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+   */
+  @Override
+  public void autonomousInit() {
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+  }
+
+  /**
+   * This function is called periodically during autonomous.
+   */
+  @Override
+  public void autonomousPeriodic() {
+  }
+
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+  }
+
+  /**
+   * This function is called periodically during operator control.
+   */
+  @Override
+  public void teleopPeriodic() {
+  }
+
+  @Override
+  public void testInit() {
+    // Cancels all running commands at the start of test mode.
+    CommandScheduler.getInstance().cancelAll();
+  }
+
+  /**
+   * This function is called periodically during test mode.
+   */
+  @Override
+  public void testPeriodic() {
+  }
 }
