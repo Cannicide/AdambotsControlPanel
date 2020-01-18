@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import com.revrobotics.ColorMatchResult;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class ControlPanel {
   
     private static String direction;
@@ -107,9 +109,12 @@ public class ControlPanel {
         return Constants.M_COLOR_SENSOR.getProximity();
     }
 
-    //Converts proximity value to distance in inches for dashboard
-    public static int getDistance() {
-        return (getProximity() * 3) / 100;
+    public static void startMotor() {
+        //Will have the code to start spinning the wheel
+    }
+
+    public static void stopMotor() {
+        //Will have the code to stop spinning the wheel
     }
 
 
@@ -119,7 +124,7 @@ public class ControlPanel {
     //TODO: For debug purposes:
     private static boolean stopRotating = false;
 
-    public static void startRotating() {
+    public static void startRotations() {
         //We can use the color our sensor is detecting as opposed to the game's sensor, it will still work:
         rotationalStartingColor = getColor();
         rotationalColorCount = 0;
@@ -127,13 +132,14 @@ public class ControlPanel {
         offStartingColor = false;
 
         //start rotating control wheel motor
+        startMotor();
     }
 
     public static int getRotations() {
         return rotationalColorCount / 2;
     }
 
-    public static void mightStopRotating () {
+    public static void monitorRotations() {
 
         //Thought process for rotations (rCC is rotationalColorCount):
         /*
@@ -155,28 +161,62 @@ public class ControlPanel {
         if (getRotations() >= Constants.MIN_ROTATIONS) {
             //stop rotating
             stopRotating = true; //TODO: for testing
+            stopMotor();
         }
     }
 
-    /* pseudo-code for the color offset corrector*/
-    public static String getColorCorrector() {
-        String colorApprox = getColor();
+    public static String getFmsColor() {
+        String gameData;
+        gameData = DriverStation.getInstance().getGameSpecificMessage();
+        if (gameData.length() > 0) {
+            switch (gameData.charAt(0)) {
+            case 'B':
+                return "Blue";
+            case 'G':
+                // Green case code
+                return "Green";
+            case 'R':
+                // Red case code
+                return "Red";
+            case 'Y':
+                // Yellow case code
+                return "Yellow";
+            default:
+                // This is corrupt data
+                return "Corrupt Data";
+            }
+        } else {
+            // Code for no data received yet
+            return "Unknown";
+        }
+    }
 
-        if (colorApprox.equals("Blue")) {
-            //colorApprox = what ever the thing is supposed to be
-        }
-        else if (colorApprox.equals("Red")) {
-            //colorApprox = what ever the thing is supposed to be
-        }
-        else if (colorApprox.equals("Green")) {
-            //colorApprox = what ever the thing is supposed to be
-        }
-        else if (colorApprox.equals("Yellow")) {
-            //colorApprox = what ever the thing is supposed to be
-        }
 
-        return colorApprox;
-    }    
+    private static String alignerStartingColor;
+    private static String targetColor;
+
+    /* code for the color offset corrector*/
+    public static void startAligner() {
+        alignerStartingColor = getColor();
+        targetColor = getFmsColor();
+        /*
+            while (true) {
+                targetColor = getFmsColor();
+                if (!targetColor.equals("Unknown") && !targetColor.equals("Corrupt Data")) {
+                    break;
+                }
+            }
+        */
+
+        //Start rotating
+        startMotor();
+    }
+
+    public static void monitorAligner() {
+        if (getColor().equals(targetColor)) {
+            
+        }
+    }
 
     public static double getConfidence() {
         Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
@@ -208,18 +248,17 @@ public class ControlPanel {
 
         //TODO: Following if statement for testing out rotation-tracker
         if (!startedTracker) {
-            startRotating();
+            startRotations();
             startedTracker = true;
             //Begins testing rotation-tracker when on color red.
         }
 
         if (startedTracker) {
-            mightStopRotating();
+            monitorRotations();
         }
 
         //SmartDashboard.putNumber("Confidence", getConfidence());
-        SmartDashboard.putString("Detected Color", getColorCorrector());
-        SmartDashboard.putNumber("Distance", getDistance());
+        SmartDashboard.putString("Detected Color", getColor());
     
         //TODO: Below are SmartDashboard values for debugging/testing purposes only
         /*SmartDashboard.putNumber("Red", getColorChannel("Red"));
