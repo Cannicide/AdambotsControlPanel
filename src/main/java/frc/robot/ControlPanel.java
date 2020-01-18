@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.DriverStation;
-
+//control panel program
 public class ControlPanel {
   
     private static String direction;
@@ -23,7 +23,7 @@ public class ControlPanel {
         direction = "Clockwise";
         lastColor = "Unknown";
     }
-
+    //This method gets the color on the spinning wheel
     public static String getColor() {
 
         
@@ -65,7 +65,7 @@ public class ControlPanel {
     
         return colorString;
     }
-
+    //This method gets the direction of where the robot is facing
     public static String getDirection() {
         return direction;
     }
@@ -104,15 +104,15 @@ public class ControlPanel {
 
         return nextColor;
     }
-
+    //This method gets the proximity of the color sensor to the wheel
     public static int getProximity() {
         return Constants.M_COLOR_SENSOR.getProximity();
     }
-
+    //This method starts the motor
     public static void startMotor() {
         //Will have the code to start spinning the wheel
     }
-
+    //This method stops the motor
     public static void stopMotor() {
         //Will have the code to stop spinning the wheel
     }
@@ -123,7 +123,7 @@ public class ControlPanel {
     private static boolean offStartingColor = false;
     //TODO: For debug purposes:
     private static boolean stopRotating = false;
-
+    //This method starts the rotations of the wheel
     public static void startRotations() {
         //We can use the color our sensor is detecting as opposed to the game's sensor, it will still work:
         rotationalStartingColor = getColor();
@@ -134,11 +134,11 @@ public class ControlPanel {
         //start rotating control wheel motor
         startMotor();
     }
-
+    //This method counts the rotations of the wheel
     public static int getRotations() {
         return rotationalColorCount / 2;
     }
-
+    //This method monitors the rotations of the wheel
     public static void monitorRotations() {
 
         //Thought process for rotations (rCC is rotationalColorCount):
@@ -148,7 +148,7 @@ public class ControlPanel {
             1.5 rotation -> rCC = 3
             ...
             3 rotations -> rCC = 6
-        */
+            */
 
         if (rotationalStartingColor.equals(getColor()) && offStartingColor) {
             rotationalColorCount++;
@@ -164,7 +164,7 @@ public class ControlPanel {
             stopMotor();
         }
     }
-
+    //This method gets the FMS color
     public static String getFmsColor() {
         String gameData;
         gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -189,12 +189,10 @@ public class ControlPanel {
     }
 
     
-    private static String alignerStartingColor;
     private static String targetColor;
 
     /* code for the color offset corrector*/
     public static void startAligner() {
-        alignerStartingColor = getColor();
         targetColor = getFmsColor();
 
 
@@ -219,9 +217,12 @@ public class ControlPanel {
         else {
             isTarget = false;
         }
+
+        if (isTarget) {
+            stopMotor();
+        }
     }
 
-    }
     //This method gets confidence for the robot
     public static double getConfidence() {
         Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
@@ -249,6 +250,7 @@ public class ControlPanel {
     //TODO: For testing rotation-tracker
     private static boolean startedTracker = false;
 
+    //This method puts stuff on the dashboard
     public static void dashboard() {
 
         //TODO: Following if statement for testing out rotation-tracker
