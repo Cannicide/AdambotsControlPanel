@@ -188,6 +188,7 @@ public class ControlPanel {
         }
     }
 
+    
     private static String alignerStartingColor;
     private static String targetColor;
 
@@ -202,10 +203,10 @@ public class ControlPanel {
 
     public static void monitorAligner() {
         
-        
+
 
     }
-
+    //This method gets confidence for the robot
     public static double getConfidence() {
         Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
         ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
