@@ -197,13 +197,29 @@ public class ControlPanel {
         alignerStartingColor = getColor();
         targetColor = getFmsColor();
 
+
         //Start rotating
         startMotor();
     }
 
     public static void monitorAligner() {
-        
-
+        boolean isTarget = false;
+        if (getColor().equals("Yellow") && targetColor.equals("Green")) {
+            isTarget = true;
+        }
+        if (getColor().equals("Green") && targetColor.equals("Yellow")) {
+            isTarget = true;
+        }
+        if (getColor().equals("Blue") && targetColor.equals("Red")) {
+            isTarget = true;
+        }
+        if (getColor().equals("Red") && targetColor.equals("Blue")) {
+            isTarget = true;
+        }
+        else {
+            isTarget = false;
+        }
+    }
 
     }
     //This method gets confidence for the robot
