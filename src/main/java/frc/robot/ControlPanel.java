@@ -173,13 +173,10 @@ public class ControlPanel {
             case 'B':
                 return "Blue";
             case 'G':
-                // Green case code
                 return "Green";
             case 'R':
-                // Red case code
                 return "Red";
             case 'Y':
-                // Yellow case code
                 return "Yellow";
             default:
                 // This is corrupt data
@@ -191,7 +188,6 @@ public class ControlPanel {
         }
     }
 
-
     private static String alignerStartingColor;
     private static String targetColor;
 
@@ -199,23 +195,15 @@ public class ControlPanel {
     public static void startAligner() {
         alignerStartingColor = getColor();
         targetColor = getFmsColor();
-        /*
-            while (true) {
-                targetColor = getFmsColor();
-                if (!targetColor.equals("Unknown") && !targetColor.equals("Corrupt Data")) {
-                    break;
-                }
-            }
-        */
 
         //Start rotating
         startMotor();
     }
 
     public static void monitorAligner() {
-        if (getColor().equals(targetColor)) {
-            
-        }
+        
+        
+
     }
 
     public static double getConfidence() {
