@@ -28,6 +28,7 @@ public class ControlPanel extends SubsystemBase {
 
   private String direction;
   private String lastColor;
+  private int tasksCompleted;
 
   public ControlPanel() {
     super();
@@ -40,6 +41,7 @@ public class ControlPanel extends SubsystemBase {
 
     direction = "Clockwise";
     lastColor = "Unknown";
+    tasksCompleted = 0;
   }
 
   public String getColor() {
@@ -170,12 +172,13 @@ public void monitorRotations() {
     if (getRotations() >= Constants.MIN_ROTATIONS) {
         //stop rotating
         stopRotating = true; //TODO: for testing
+        tasksCompleted++;
         stopMotor();
     }
 }
 //This method gets the FMS color
 public String getFmsColor() {
-    /*String gameData;
+    String gameData;
     gameData = DriverStation.getInstance().getGameSpecificMessage();
     if (gameData.length() > 0) {
         switch (gameData.charAt(0)) {
@@ -194,9 +197,7 @@ public String getFmsColor() {
     } else {
         // Code for no data received yet
         return "Unknown";
-    }*/
-    //For testing purposes, assign manual color:
-    return "Blue";
+    }
 }
 
 
@@ -211,18 +212,14 @@ public void startAligner() {
     startMotor();
 }
 
+public String colorCorrector(String currentColor) {
+    return mapNextColor(mapNextColor(currentColor));
+}
+
 public void monitorAligner() {
     boolean isTarget = false;
-    if (getColor().equals("Yellow") && targetColor.equals("Green")) {
-        isTarget = true;
-    }
-    if (getColor().equals("Green") && targetColor.equals("Yellow")) {
-        isTarget = true;
-    }
-    if (getColor().equals("Blue") && targetColor.equals("Red")) {
-        isTarget = true;
-    }
-    if (getColor().equals("Red") && targetColor.equals("Blue")) {
+    
+    if (targetColor.equals(colorCorrector(getColor()))) {
         isTarget = true;
     }
     else {
@@ -230,11 +227,8 @@ public void monitorAligner() {
     }
 
     if (isTarget) {
-        stopRotating = true;
+        tasksCompleted++;
         stopMotor();
-    }
-    else {
-        stopRotating = false;
     }
     
 }
@@ -246,35 +240,28 @@ public double getConfidence() {
     return match.confidence;
 }
 
-private boolean startedTracker = false;
 
-//This method puts stuff on the dashboard
-public void putDashboard() {
+//These methods put stuff on the dashboard
+public void putDashRotations() {
 
-    //TODO: Following if statement for testing out rotation-tracker
-    if (!startedTracker) {
-        //startRotations();
-        startAligner();
-        startedTracker = true;
-        //Begins testing rotation-tracker when on color red.
-    }
-
-    if (startedTracker) {
-        //monitorRotations();
-        monitorAligner();
-    }
-
-    SmartDashboard.putNumber("Confidence", getConfidence());
     SmartDashboard.putString("Detected Color", getColor());
-
-    SmartDashboard.putString("Direction", getDirection());
     SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
-    SmartDashboard.putBoolean("Target Color on Game Sensor", stopRotating);
     SmartDashboard.putNumber("Rotations", getRotations());
 
 }
 
-  
+public void putDashAligner() {
+
+    SmartDashboard.putString("Detected Color", getColor());
+    SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector());
+    SmartDashboard.putString("Target Gamesensor Color", targetColor);
+
+}
+
+public void putFinalDash() {
+    SmartDashboard.putString("Tasks Completed (Control Panel)", tasksCompleted + "/2");
+}
+
 
 
   @Override
