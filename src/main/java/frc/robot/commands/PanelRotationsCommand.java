@@ -10,7 +10,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ControlPanel;
 
 public class PanelRotationsCommand extends CommandBase {
   public final ControlPanel controlPanel;
