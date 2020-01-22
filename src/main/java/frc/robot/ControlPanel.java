@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 //control panel program
 public class ControlPanel {
   
-    private static String direction;
     private static String lastColor;
     
     public static void init() {   
@@ -20,7 +19,6 @@ public class ControlPanel {
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.RED_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.YELLOW_TARGET);
 
-        direction = "Clockwise";
         lastColor = "Unknown";
     }
     //This method gets the color on the spinning wheel
@@ -67,7 +65,7 @@ public class ControlPanel {
     }
     //This method gets the direction of where the robot is facing
     public static String getDirection() {
-        return direction;
+        return Constants.DIRECTION;
     }
 
     public static String mapNextColor(String color) {
@@ -202,11 +200,11 @@ public class ControlPanel {
         startMotor();
     }
 
-    public String colorCorrector(String currentColor) {
+    public static String colorCorrector(String currentColor) {
         return mapNextColor(mapNextColor(currentColor));
     }
     
-    public void monitorAligner() {
+    public static void monitorAligner() {
         boolean isTarget = false;
         
         if (targetColor.equals(colorCorrector(getColor()))) {
@@ -217,36 +215,13 @@ public class ControlPanel {
         }
     
         if (isTarget) {
-            tasksCompleted++;
             stopRotating = true;
             stopMotor();
         }
         
     }
 
-    //This method gets confidence for the robot
-    public static double getConfidence() {
-        Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
-        ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
-        return match.confidence;
-    }
 
-    /*public static double getColorChannel(String color) {
-        Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
-
-        if (color.equals("Red")) {
-            return detectedColor.red;
-        }
-        else if (color.equals("Green")) {
-            return detectedColor.green;
-        }
-        else if (color.equals("Blue")) {
-            return detectedColor.blue;
-        }
-        else {
-            return 0.0;
-        }
-    }*/
 
     //TODO: For testing rotation-tracker
     private static boolean startedTracker = false;
@@ -269,15 +244,11 @@ public class ControlPanel {
 
         SmartDashboard.putString("Detected Color", getColor());
     
-        //TODO: Below are SmartDashboard values for debugging/testing purposes only
-        /*SmartDashboard.putNumber("Red", getColorChannel("Red"));
-        SmartDashboard.putNumber("Green", getColorChannel("Green"));
-        SmartDashboard.putNumber("Blue", getColorChannel("Blue"));*/
 
         //TODO: Below are to-be-tested/work-in-progress values
         SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
         SmartDashboard.putNumber("Rotations", getRotations());
-        SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector());
+        SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector(getColor()));
         SmartDashboard.putString("Target Gamesensor Color", targetColor);
 
     }
