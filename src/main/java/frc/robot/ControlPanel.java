@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import com.revrobotics.ColorMatchResult;
 
-import edu.wpi.first.wpilibj.DriverStation;
+//import edu.wpi.first.wpilibj.DriverStation;
+
 //control panel program
 public class ControlPanel {
   
@@ -119,8 +120,9 @@ public class ControlPanel {
     private static String rotationalStartingColor;
     private static int rotationalColorCount;
     private static boolean offStartingColor = false;
-    //TODO: For debug purposes:
+
     private static boolean stopRotating = false;
+
     //This method starts the rotations of the wheel
     public static void startRotations() {
         //We can use the color our sensor is detecting as opposed to the game's sensor, it will still work:
@@ -158,7 +160,7 @@ public class ControlPanel {
 
         if (getRotations() >= Constants.MIN_ROTATIONS) {
             //stop rotating
-            stopRotating = true; //TODO: for testing
+            stopRotating = true;
             stopMotor();
         }
     }
@@ -221,15 +223,12 @@ public class ControlPanel {
         
     }
 
-
-
-    //TODO: For testing rotation-tracker
     private static boolean startedTracker = false;
 
     //This method puts stuff on the dashboard
     public static void dashboard() {
 
-        //TODO: Following if statement for testing out rotation-tracker
+        //Following if statement for testing out rotation-tracker
         if (!startedTracker) {
             //startRotations();
             startAligner();
@@ -242,14 +241,16 @@ public class ControlPanel {
             monitorAligner();
         }
 
+        //Immediately below are tested and working values
         SmartDashboard.putString("Detected Color", getColor());
+        //SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
+        //SmartDashboard.putNumber("Rotations", getRotations());
     
 
-        //TODO: Below are to-be-tested/work-in-progress values
-        SmartDashboard.putString("Predicted Next Color", mapNextColor(getColor()));
-        SmartDashboard.putNumber("Rotations", getRotations());
-        SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector(getColor()));
-        SmartDashboard.putString("Target Gamesensor Color", targetColor);
+        //Below are to-be-tested/work-in-progress values
+        SmartDashboard.putString("Predicted GSC", colorCorrector(getColor()));
+        SmartDashboard.putString("Target GSC", targetColor);
+        //GSC = Game Sensor Color (color that the game's built-in sensor detects)
 
     }
 }
