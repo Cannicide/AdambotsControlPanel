@@ -27,9 +27,17 @@ public final class Constants {
     public static final int FR_TALON = 2;
     public static final int BR_TALON = 3;
     public static final int INTAKE_MOTOR_PORT = 6;
+
+    //TODO: Add accurate PANEL_MOTOR_PORTs (ports of motors that spin control panel)
+    public static final int PANEL_MOTOR1_PORT = 10000;
+    public static final int PANEL_MOTOR2_PORT = 10001;
     
 	public static final int INTAKE_SPEED = 1;
     public static final int OUTTAKE_SPEED = -1;
+
+    //TODO: Add accurate panel motor speeds (motors that spin control panel)
+    public static final double PANEL_MOTOR1_SPEED = 0.5;
+    public static final double PANEL_MOTOR2_SPEED = -1 * PANEL_MOTOR1_SPEED;
     
     public final static int MIN_ROTATIONS = 3;
     public final static int MAX_ROTATIONS = 5;

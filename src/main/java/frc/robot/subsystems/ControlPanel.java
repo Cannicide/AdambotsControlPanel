@@ -14,11 +14,19 @@ import frc.robot.Constants;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 
+//Color Sensor dependencies:
+import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorMatchResult;
 
+
+//FMS dependencies:
 import edu.wpi.first.wpilibj.DriverStation;
+
+
+//Motor dependencies:
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class ControlPanel extends SubsystemBase {
   /**
@@ -28,6 +36,8 @@ public class ControlPanel extends SubsystemBase {
 
   private String lastColor;
   private int tasksCompleted;
+  public WPI_TalonSRX panelMotor1;
+  public WPI_TalonSRX panelMotor2;
 
   public ControlPanel() {
     super();
@@ -40,6 +50,9 @@ public class ControlPanel extends SubsystemBase {
 
     lastColor = "Unknown";
     tasksCompleted = 0;
+
+    panelMotor1 = new WPI_TalonSRX(Constants.PANEL_MOTOR1_PORT);
+    panelMotor2 = new WPI_TalonSRX(Constants.PANEL_MOTOR2_PORT);
   }
 
   public String getColor() {
@@ -123,19 +136,20 @@ public String mapNextColor(String color) {
     return nextColor;
 }
 
-//This method gets the proximity of the color sensor to the wheel
-public int getProximity() {
-    return Constants.M_COLOR_SENSOR.getProximity();
-}
+//Made proximity more efficient
 
 
 public void startMotor() {
     //Will have the code to start spinning the wheel
+    panelMotor1.set(ControlMode.PercentOutput, Constants.PANEL_MOTOR1_SPEED);
+    panelMotor2.set(ControlMode.PercentOutput, Constants.PANEL_MOTOR2_SPEED);
 }
 
 
 public void stopMotor() {
     //Will have the code to stop spinning the wheel
+    panelMotor1.set(ControlMode.PercentOutput, 0.0);
+    panelMotor2.set(ControlMode.PercentOutput, 0.0);
 }
 
 
