@@ -26,7 +26,6 @@ public class ControlPanel extends SubsystemBase {
    */
  
 
-  private String direction;
   private String lastColor;
   private int tasksCompleted;
 
@@ -39,7 +38,6 @@ public class ControlPanel extends SubsystemBase {
     Constants.M_COLOR_MATCHER.addColorMatch(Constants.RED_TARGET);
     Constants.M_COLOR_MATCHER.addColorMatch(Constants.YELLOW_TARGET);
 
-    direction = "Clockwise";
     lastColor = "Unknown";
     tasksCompleted = 0;
   }
@@ -87,7 +85,7 @@ public class ControlPanel extends SubsystemBase {
 }
 
 public String getDirection() {
-    return direction;
+    return Constants.DIRECTION;
 }
 
 public String mapNextColor(String color) {

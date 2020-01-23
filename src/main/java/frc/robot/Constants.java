@@ -49,5 +49,7 @@ public final class Constants {
     //The following color order is defined for the sensor moving in a clockwise direction
     //If the control panel itself turns clockwise, the sensor will move in a counterclockwise direction
     public final static String[] COLOR_ORDER = {"Blue", "Green", "Red", "Yellow"};
+
+    public final static String DIRECTION = "Clockwise";
 }
 
