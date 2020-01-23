@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class ControlPanel extends SubsystemBase {
   /**
-   * Creates a new DriveTrainNew.
+   * Creates a new ControlPanel Subsystem.
    */
  
 
@@ -85,7 +85,7 @@ public class ControlPanel extends SubsystemBase {
 
     return colorString;
 }
-//This method gets the direction of where the robot is facing
+
 public String getDirection() {
     return direction;
 }
@@ -124,15 +124,18 @@ public String mapNextColor(String color) {
 
     return nextColor;
 }
+
 //This method gets the proximity of the color sensor to the wheel
 public int getProximity() {
     return Constants.M_COLOR_SENSOR.getProximity();
 }
-//This method starts the motor
+
+
 public void startMotor() {
     //Will have the code to start spinning the wheel
 }
-//This method stops the motor
+
+
 public void stopMotor() {
     //Will have the code to stop spinning the wheel
 }
@@ -141,23 +144,23 @@ public void stopMotor() {
 private String rotationalStartingColor;
 private int rotationalColorCount;
 private boolean offStartingColor = false;
-//TODO: For debug purposes:
-private boolean stopRotating = false;
-//This method starts the rotations of the wheel
+
+
 public void startRotations() {
     //We can use the color our sensor is detecting as opposed to the game's sensor, it will still work:
     rotationalStartingColor = getColor();
     rotationalColorCount = 0;
-    stopRotating = false;
     offStartingColor = false;
 
     //start rotating control wheel motor
     startMotor();
 }
+
 //This method counts the rotations of the wheel
 public int getRotations() {
     return rotationalColorCount / 2;
 }
+
 //This method monitors the rotations of the wheel
 public void monitorRotations() {
 
@@ -171,11 +174,11 @@ public void monitorRotations() {
 
     if (getRotations() >= Constants.MIN_ROTATIONS) {
         //stop rotating
-        stopRotating = true; //TODO: for testing
         tasksCompleted++;
         stopMotor();
     }
 }
+
 //This method gets the FMS color
 public String getFmsColor() {
     String gameData;
@@ -233,15 +236,9 @@ public void monitorAligner() {
     
 }
 
-//This method gets confidence for the robot
-public double getConfidence() {
-    Color detectedColor = Constants.M_COLOR_SENSOR.getColor();
-    ColorMatchResult match = Constants.M_COLOR_MATCHER.matchClosestColor(detectedColor);
-    return match.confidence;
-}
 
 
-//These methods put stuff on the dashboard
+//These methods put stuff on the dashboard (only use if necessary)
 public void putDashRotations() {
 
     SmartDashboard.putString("Detected Color", getColor());
@@ -253,7 +250,7 @@ public void putDashRotations() {
 public void putDashAligner() {
 
     SmartDashboard.putString("Detected Color", getColor());
-    SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector());
+    SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector(getColor()));
     SmartDashboard.putString("Target Gamesensor Color", targetColor);
 
 }
