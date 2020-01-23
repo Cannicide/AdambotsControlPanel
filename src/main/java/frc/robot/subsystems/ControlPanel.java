@@ -136,7 +136,10 @@ public String mapNextColor(String color) {
     return nextColor;
 }
 
-//Made proximity more efficient
+//This method gets the proximity of the color sensor to the wheel
+public double getProximity() {
+    return Constants.M_COLOR_SENSOR.getProximity();
+}
 
 
 public void startMotor() {
