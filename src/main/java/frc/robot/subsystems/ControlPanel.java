@@ -35,9 +35,10 @@ public class ControlPanel extends SubsystemBase {
  
 
   private String lastColor;
-  private int tasksCompleted;
   public WPI_TalonSRX panelMotor1;
   public WPI_TalonSRX panelMotor2;
+  private boolean rotationsFinished;
+  private boolean alignerFinished;
 
   public ControlPanel() {
     super();
@@ -49,7 +50,8 @@ public class ControlPanel extends SubsystemBase {
     Constants.M_COLOR_MATCHER.addColorMatch(Constants.YELLOW_TARGET);
 
     lastColor = "Unknown";
-    tasksCompleted = 0;
+    rotationsFinished = false;
+    alignerFinished = false;
 
     panelMotor1 = new WPI_TalonSRX(Constants.PANEL_MOTOR1_PORT);
     panelMotor2 = new WPI_TalonSRX(Constants.PANEL_MOTOR2_PORT);
@@ -189,8 +191,20 @@ public void monitorRotations() {
 
     if (getRotations() >= Constants.MIN_ROTATIONS) {
         //stop rotating
-        tasksCompleted++;
+        rotationsFinished = true;
         stopMotor();
+    }
+}
+
+public boolean isFinished(String event) {
+    if (event.equals("rotations")) {
+        return rotationsFinished;
+    }
+    else if(event.equals("aligner")) {
+        return alignerFinished;
+    }
+    else {
+        return false;
     }
 }
 
@@ -245,7 +259,6 @@ public void monitorAligner() {
     }
 
     if (isTarget) {
-        tasksCompleted++;
         stopMotor();
     }
     
@@ -268,10 +281,6 @@ public void putDashAligner() {
     SmartDashboard.putString("Predicted Gamesensor Color", colorCorrector(getColor()));
     SmartDashboard.putString("Target Gamesensor Color", targetColor);
 
-}
-
-public void putFinalDash() {
-    SmartDashboard.putString("Tasks Completed (Control Panel)", tasksCompleted + "/2");
 }
 
 
