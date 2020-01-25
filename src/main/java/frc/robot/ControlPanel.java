@@ -13,11 +13,25 @@ import com.revrobotics.ColorMatchResult;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-//control panel program
+/**
+ * ControlPanel class containing code for spinning and automating color wheel.
+ * @author Adambots-245
+ * @author Cannicide
+ * @author FlamingQaz
+ * @author Grant Clawson
+ * @since 1/13/2020
+ * @version 1.21
+ */
 public class ControlPanel {
   
-    private static String lastColor;
+    /**
+     * Represents the last unique-independent color seen by the color sensor.
+     */
+    public static String lastColor;
     
+    /**
+     * Initializes ControlPanel code with Blue, Green, Red, and Yellow color target values, as well as a default lastColor value.
+     */
     public static void init() {   
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.BLUE_TARGET);
         Constants.M_COLOR_MATCHER.addColorMatch(Constants.GREEN_TARGET);
@@ -26,7 +40,16 @@ public class ControlPanel {
 
         lastColor = "Unknown";
     }
-    //This method gets the color on the spinning wheel
+
+    /**
+     * Gets the color that the color sensor is detecting. Accounts for problems with inter-color transitions. Returns Unknown if not within proximity.
+     * @return String:
+     * "Blue" |
+     * "Red" |
+     * "Green" |
+     * "Yellow" |
+     * "Unknown"
+     */
     public static String getColor() {
 
         
@@ -68,7 +91,11 @@ public class ControlPanel {
     
         return colorString;
     }
-    //This method gets the direction of where the robot is facing
+
+    /**
+    * This method gets the direction of where the robot is facing
+    * @return String: "Clockwise" | "Counterclockwise"
+    */
     public static String getDirection() {
         return Constants.DIRECTION;
     }
