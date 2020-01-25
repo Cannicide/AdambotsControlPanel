@@ -244,6 +244,7 @@ public void startAligner() {
     startMotor();
 }
 
+//Gets the color that is two color slices away from our sensor's position
 public String colorCorrector(String currentColor) {
     return mapNextColor(mapNextColor(currentColor));
 }
