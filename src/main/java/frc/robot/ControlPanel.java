@@ -9,6 +9,10 @@ import com.revrobotics.ColorMatchResult;
 
 //import edu.wpi.first.wpilibj.DriverStation;
 
+//Motor dependencies:
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 //control panel program
 public class ControlPanel {
   
