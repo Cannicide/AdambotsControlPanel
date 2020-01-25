@@ -244,9 +244,21 @@ public void startAligner() {
     startMotor();
 }
 
+public int getDifferential() {
+    return Constants.DIFFERENTIAL;
+}
+
 //Gets the color that is two color slices away from our sensor's position
 public String colorCorrector(String currentColor) {
-    return mapNextColor(mapNextColor(currentColor));
+    if (getDifferential() == 2) {
+        return mapNextColor(mapNextColor(currentColor));
+    }
+    else if (getDifferential() == 3) {
+        return mapNextColor(mapNextColor(mapNextColor(currentColor)));
+    }
+    else {
+        return mapNextColor(currentColor);
+    }
 }
 
 public void monitorAligner() {

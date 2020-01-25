@@ -60,5 +60,8 @@ public final class Constants {
     public final static String[] COLOR_ORDER = {"Blue", "Green", "Red", "Yellow"};
 
     public final static String DIRECTION = "Clockwise";
+
+    //The distance between our color sensor and the game's color sensor in number of color slices away
+    public final static int DIFFERENTIAL = 2;
 }
 
