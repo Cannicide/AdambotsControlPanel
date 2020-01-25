@@ -32,6 +32,12 @@ public final class Constants {
     //TODO: Add accurate PANEL_MOTOR_PORTs (ports of motors that spin control panel)
     public static final int PANEL_MOTOR1_PORT = 10000;
     public static final int PANEL_MOTOR2_PORT = 10001;
+
+    //TODO: Add accurate CLIMB_ARM_PORTs (ports of motors of the arms used for climbing and hanging) and ARM_WHEEL_PORTs (ports of motors of horizontal alignment wheels for climbing)
+    public static final int CLIMB_ARM1_PORT = 10002;
+    public static final int CLIMB_ARM2_PORT = 10003;
+    public static final int ARM1_WHEEL_PORT = 10004;
+    public static final int ARM2_WHEEL_PORT = 10005;
     
 	public static final int INTAKE_SPEED = 1;
     public static final int OUTTAKE_SPEED = -1;
@@ -39,6 +45,9 @@ public final class Constants {
     //TODO: Add accurate panel motor speeds (motors that spin control panel)
     public static final double PANEL_MOTOR1_SPEED = 0.5;
     public static final double PANEL_MOTOR2_SPEED = -1 * PANEL_MOTOR1_SPEED;
+
+    //TODO: Add accurate MAX_GLIDE_SPEED (Motors that move robot horizontally on shield generator climb/hanging rung bar)
+    public static final double MAX_GLIDE_SPEED = 0.5;
     
     public final static int MIN_ROTATIONS = 3;
     public final static int MAX_ROTATIONS = 5;
@@ -63,5 +72,7 @@ public final class Constants {
 
     //The distance between our color sensor and the game's color sensor in number of color slices away
     public final static int DIFFERENTIAL = 2;
+
+    public final static int MAX_LIFT_SPEED = 60000;
 }
 
