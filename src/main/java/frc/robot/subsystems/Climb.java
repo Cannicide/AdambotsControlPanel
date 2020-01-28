@@ -19,18 +19,13 @@ public class Climb extends SubsystemBase {
      * Creates a new Climb/Elevator Subsystem
      */
 
-    public WPI_TalonSRX arm1;
-    public WPI_TalonSRX arm2;
-    public WPI_TalonSRX arm1_wheel;
-    public WPI_TalonSRX arm2_wheel;
+    public WPI_TalonSRX elevator;
+
 
     public Climb() {
         super();
 
-        arm1 = new WPI_TalonSRX(Constants.CLIMB_ARM1_PORT);
-        arm2 = new WPI_TalonSRX(Constants.CLIMB_ARM2_PORT);
-        arm1_wheel = new WPI_TalonSRX(Constants.ARM1_WHEEL_PORT);
-        arm2_wheel = new WPI_TalonSRX(Constants.ARM2_WHEEL_PORT);
+        elevator = new WPI_TalonSRX(Constants.CLIMB_ARM1_PORT);
     }
 
     private double liftSpeed(double elevateSpeed) {
@@ -42,24 +37,15 @@ public class Climb extends SubsystemBase {
     }
 
     //Rise/lower the elevator arms
-    public void elevate(double arm1Speed, double arm2Speed, boolean autoLevel) {
-        arm1Speed = liftSpeed(arm1Speed);
-        arm2Speed = liftSpeed(arm2Speed);
-        arm1.set(arm1Speed);
-
-        //When autolevel enabled, both arms should rise at an equal speed, to an equal height, synchronously
-        if (autoLevel) {
-            arm2.set(arm1Speed);
-        }
-        else {
-            arm2.set(arm2Speed);
-        }
+    public void elevate(double elevatorSpeed, double arm2Speed, boolean autoLevel) {
+        elevatorSpeed = liftSpeed(elevatorSpeed);
+        elevator.set(elevatorSpeed);
     }
 
-    public boolean atMaxHeight() {
-        ControlMode height = ControlMode.Position;
-        return false;
-    }
+   public boolean atMaxHeight() {
+       ControlMode height = ControlMode.Position;
+       return false;
+   }
 
     //Move horizontally along the Shield Generator bar
     public void glide(double glideSpeed) {
