@@ -281,6 +281,7 @@ public class ControlPanel {
         //Below are to-be-tested/work-in-progress values
         SmartDashboard.putString("Predicted GSC", colorCorrector(getColor()));
         SmartDashboard.putString("Target GSC", targetColor);
+        SmartDashboard.putBoolean("Stop Rotating", stopRotating);
         //GSC = Game Sensor Color (color that the game's built-in sensor detects)
 
     }
