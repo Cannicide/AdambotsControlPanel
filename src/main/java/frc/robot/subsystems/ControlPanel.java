@@ -35,8 +35,7 @@ public class ControlPanel extends SubsystemBase {
  
 
   private String lastColor;
-  public WPI_TalonSRX panelMotor1;
-  public WPI_TalonSRX panelMotor2;
+  public WPI_TalonSRX panelMotor;
   private boolean rotationsFinished;
   private boolean alignerFinished;
 
@@ -53,8 +52,7 @@ public class ControlPanel extends SubsystemBase {
     rotationsFinished = false;
     alignerFinished = false;
 
-    panelMotor1 = new WPI_TalonSRX(Constants.PANEL_MOTOR1_PORT);
-    panelMotor2 = new WPI_TalonSRX(Constants.PANEL_MOTOR2_PORT);
+    panelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);
   }
 
   public String getColor() {
@@ -146,15 +144,13 @@ public double getProximity() {
 
 public void startMotor() {
     //Will have the code to start spinning the wheel
-    panelMotor1.set(ControlMode.PercentOutput, Constants.PANEL_MOTOR1_SPEED);
-    panelMotor2.set(ControlMode.PercentOutput, Constants.PANEL_MOTOR2_SPEED);
+    panelMotor.set(ControlMode.PercentOutput, Constants.PANEL_MOTOR_SPEED);
 }
 
 
 public void stopMotor() {
     //Will have the code to stop spinning the wheel
-    panelMotor1.set(ControlMode.PercentOutput, 0.0);
-    panelMotor2.set(ControlMode.PercentOutput, 0.0);
+    panelMotor.set(ControlMode.PercentOutput, 0.0);
 }
 
 

@@ -30,8 +30,7 @@ public final class Constants {
     public static final int INTAKE_MOTOR_PORT = 6;
 
     //TODO: Add accurate PANEL_MOTOR_PORTs (ports of motors that spin control panel)
-    public static final int PANEL_MOTOR1_PORT = 10000;
-    public static final int PANEL_MOTOR2_PORT = 10001;
+    public static final int PANEL_MOTOR_PORT = 10000;
 
     //TODO: Add accurate CLIMB_ARM_PORTs (ports of motors of the arms used for climbing and hanging) and ARM_WHEEL_PORTs (ports of motors of horizontal alignment wheels for climbing)
     public static final int CLIMB_ARM1_PORT = 10002;
@@ -43,8 +42,7 @@ public final class Constants {
     public static final int OUTTAKE_SPEED = -1;
 
     //TODO: Add accurate panel motor speeds (motors that spin control panel)
-    public static final double PANEL_MOTOR1_SPEED = 0.5;
-    public static final double PANEL_MOTOR2_SPEED = -1 * PANEL_MOTOR1_SPEED;
+    public static final double PANEL_MOTOR_SPEED = 0.5;
 
     //TODO: Add accurate MAX_GLIDE_SPEED (Motors that move robot horizontally on shield generator climb/hanging rung bar)
     public static final double MAX_GLIDE_SPEED = 0.5;
