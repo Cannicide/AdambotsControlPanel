@@ -19,7 +19,7 @@ public class Constants {
     public final static Color BLUE_TARGET = ColorMatch.makeColor(0.125, 0.424, 0.450);
     public final static Color GREEN_TARGET = ColorMatch.makeColor(0.167, 0.580, 0.252);
     public final static Color RED_TARGET = ColorMatch.makeColor(0.518, 0.347, 0.134);
-    public final static Color YELLOW_TARGET = ColorMatch.makeColor(0.311, 0.566, 0.121);
+    public final static Color YELLOW_TARGET = ColorMatch.makeColor(0.311, 0.566, 0.121); 
 
 
     //The following color order is defined for the sensor moving in a clockwise direction
