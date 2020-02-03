@@ -20,14 +20,12 @@ import java.util.function.BooleanSupplier;
 public class ClimbVerticalCommand extends CommandBase {
 
   private final Climb elevator;
-  private final DoubleSupplier arm1Speed;
-  private final DoubleSupplier arm2Speed;
+  private final DoubleSupplier armSpeed;
   private final BooleanSupplier autoLevel;
 
-  public ClimbVerticalCommand(Climb elevator, DoubleSupplier arm1Speed, DoubleSupplier arm2Speed, BooleanSupplier autoLevel) {
+  public ClimbVerticalCommand(Climb elevator, DoubleSupplier armSpeed, BooleanSupplier autoLevel) {
     this.elevator = elevator;
-    this.arm1Speed = arm1Speed;
-    this.arm2Speed = arm2Speed;
+    this.armSpeed = armSpeed;
     this.autoLevel = autoLevel;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevator);
@@ -42,7 +40,7 @@ public class ClimbVerticalCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      elevator.elevate(arm1Speed.getAsDouble(), arm2Speed.getAsDouble(), autoLevel.getAsBoolean());
+      elevator.elevate(armSpeed.getAsDouble(), autoLevel.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.
