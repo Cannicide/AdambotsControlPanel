@@ -37,15 +37,10 @@ public class Climb extends SubsystemBase {
     }
 
     //Rise/lower the elevator arms
-    public void elevate(double elevatorSpeed, double arm2Speed, boolean autoLevel) {
+    public void elevate(double elevatorSpeed, boolean autoLevel) {
         elevatorSpeed = liftSpeed(elevatorSpeed);
         elevator.set(elevatorSpeed);
     }
-
-   public boolean atMaxHeight() {
-       ControlMode height = ControlMode.Position;
-       return false;
-   }
 
     //Move horizontally along the Shield Generator bar
     public void glide(double glideSpeed) {
